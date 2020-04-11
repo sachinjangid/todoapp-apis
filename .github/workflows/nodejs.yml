@@ -1,29 +1,45 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+###########################
+###########################
+## Deploy GitHub Actions ##
+###########################
+###########################
+name: NodeJS AWS SAM Deploy
 
-name: Greet Everyone
-# This workflow is triggered on pushes to the repository.
-on: [push]
+#
+# Documentation:
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+#
 
+#############################
+# Start the job on all push #
+#############################
+on: ['push']
+
+###############
+# Set the Job #
+###############
 jobs:
   build:
-    # Job name is Greeting
-    name: Greeting
-    # This job runs on Linux
+    # Name the Job
+    name: NodeJS AWS SAM Deploy
+    # Set the agent to run on
     runs-on: ubuntu-latest
+
+    ##################
+    # Load all steps #
+    ##################
     steps:
-      # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
-      - name: Hello world
-        uses: actions/hello-world-javascript-action@v1
-        with:
-          who-to-greet: 'Mona the Octocat'
-        id: hello
-      # This step prints an output (time) from the previous step's action.
-      - name: Echo the greeting's time
-        run: echo 'The time was ${{ steps.hello.outputs.time }}.'
-      
-      - name: Login to ec2 
+      ##########################
+      # Checkout the code base #
+      ##########################
+      - name: Checkout Code
+        uses: actions/checkout@master
+
+      #############################
+      # Run NodeJS AWS SAM Deploy #
+      #############################
+      - name: NodeJS AWS SAM Deploy
         uses: docker://admiralawkbar/aws-nodejs:latest
-          env:
-            AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_KEY: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
+        env:
+           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+           AWS_SECRET_KEY: ${{ secrets.AWS_ACCESS_KEY_SECRET }}

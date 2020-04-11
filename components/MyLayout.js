@@ -1,18 +1,13 @@
-import Header from './Header';
+import React, { Component } from 'react';
 
-const layoutStyle = {
-  margin: 20,
-  padding: 20,
-  border: '1px solid #DDD'
-};
+class Footer extends Component {
+    render() {
+        return (
+            <div>
+              {this.props.children}
+            </div>
+        )
+    }
+}
 
-const withLayout = Props => {
-  return () => (
-      <div style={layoutStyle}>
-        {/* <Header />  */}
-        <Props />
-      </div>
-  );
-};
-
-export default withLayout;
+export default Footer;
